@@ -3,12 +3,13 @@ from __future__ import annotations
 
 import random
 from datetime import date
-from tkinter import messagebox, simpledialog
+from tkinter import filedialog, messagebox, simpledialog
 
 import customtkinter as ctk
 
 from ..logic.outfits import Suggestion, generate, outfit_name, score_outfit, season_for
 from ..models import CATEGORIES, OCCASIONS, Item, Outfit
+from ..share import save_outfit_image
 from .widgets import ACCENT, CARD, Toast, accent_button, ghost_button, h1, h2, item_image, muted
 
 THUMB = 96
@@ -138,7 +139,8 @@ class OutfitView(ctk.CTkFrame):
         occ = self.occasion.get()
         strip = OutfitStrip(self.results, s.items, f"Option {k + 1}  ·  {s.score:.0%}", ", ".join(s.reasons),
                             actions=[("Wear today", lambda s=s: self._wear(s.items, occ)),
-                                     ("Save", lambda s=s: self._save_suggestion(s, occ))])
+                                     ("Save", lambda s=s: self._save_suggestion(s, occ)),
+                                     ("Share image", lambda s=s: self._share(s.items, f"Option {k + 1} · {occ}", ", ".join(s.reasons)))])
         strip.pack(fill="x", pady=6)
 
     def _save_suggestion(self, s: Suggestion, occ: str):
@@ -153,6 +155,14 @@ class OutfitView(ctk.CTkFrame):
         self.repo.log_wear([i.id for i in items], outfit_id=outfit_id)
         self.toast.show("Logged as worn today")
         self.app.data_changed()
+
+    def _share(self, items: list[Item], title: str, subtitle: str = ""):
+        p = filedialog.asksaveasfilename(title="Save outfit image", defaultextension=".png",
+                                         initialfile=title.replace(":", "").replace("/", "-")[:40] + ".png",
+                                         filetypes=[("PNG", "*.png")])
+        if p:
+            save_outfit_image(items, title, p, subtitle)
+            self.toast.show(f"Saved image to {p}")
 
     # ---------- manual ----------
     def _manual_options(self):
@@ -216,6 +226,7 @@ class OutfitView(ctk.CTkFrame):
             sub = f"{o.occasion} · saved {o.created.isoformat()}" + (f" · {o.notes}" if o.notes else "")
             OutfitStrip(self.saved_frame, items, o.name, sub,
                         actions=[("Delete", lambda o=o: self._delete(o)),
+                                 ("Share image", lambda o=o, items=items: self._share(items, o.name, o.occasion)),
                                  ("Wear today", lambda o=o, items=items: self._wear(items, o.occasion, o.id))]).pack(fill="x", pady=6)
 
     def _delete(self, o: Outfit):

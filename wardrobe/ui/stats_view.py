@@ -115,6 +115,21 @@ class StatsView(ctk.CTkFrame):
                 self._item_row(f, s, f"last {s.last_worn.strftime('%d %b %Y')}")
             ctk.CTkLabel(f, text="").pack()
 
+        vers = stats.versatility(items)
+        if vers:
+            f = self._section("Capsule check — pieces that go with the most other pieces")
+            top = vers[:6]
+            bottom = [v for v in vers if v[1] <= 1][:6]
+            row = ctk.CTkFrame(f, fg_color="transparent")
+            row.pack(fill="x", padx=10, pady=(0, 6))
+            for it, n in top:
+                cell = ctk.CTkFrame(row, fg_color="transparent")
+                cell.pack(side="left", padx=4)
+                ctk.CTkLabel(cell, text="", image=item_image(it, 64)).pack()
+                muted(cell, f"{n} combos", anchor="center").pack()
+            if bottom:
+                muted(f, "Loners (pair with ≤1 other piece): " + ", ".join(it.name for it, _ in bottom)).pack(anchor="w", padx=14, pady=(0, 10))
+
         f = self._section("Colours")
         cb = stats.colour_breakdown(items)
         for name, n in cb[:10]:

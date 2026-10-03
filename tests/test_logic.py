@@ -173,3 +173,15 @@ def test_csv_roundtrip(tmp_path):
     a = {(i.name, i.category, i.colour, tuple(i.seasons), tuple(i.tags), i.price) for i in repo.items()}
     b = {(i.name, i.category, i.colour, tuple(i.seasons), tuple(i.tags), i.price) for i in repo2.items()}
     assert a == b
+
+
+def test_versatility_and_share(tmp_path):
+    from wardrobe.share import save_outfit_image
+    repo = Repository(":memory:")
+    seed(repo, with_history=False)
+    v = stats.versatility(repo.items())
+    assert v and v[0][1] >= v[-1][1]
+    names = [it.name for it, _ in v[:5]]
+    assert any("jeans" in n.lower() or "tee" in n.lower() for n in names)   # basics should rank high
+    p = save_outfit_image(repo.items()[:4], "Test outfit", tmp_path / "o.png", "casual")
+    assert p.exists() and p.stat().st_size > 1000

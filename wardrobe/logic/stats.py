@@ -70,3 +70,28 @@ def best_value(stats: list[ItemStat], n: int = 5) -> list[ItemStat]:
     """Lowest cost-per-wear among priced, worn items."""
     priced = [s for s in stats if s.cost_per_wear is not None and s.wears > 0]
     return sorted(priced, key=lambda s: s.cost_per_wear)[:n]
+
+
+def versatility(items: list[Item], threshold: float = 0.8) -> list[tuple[Item, int]]:
+    """Capsule analysis: for each main-layer piece, how many other main pieces it pairs with
+    (colour harmony above `threshold`, compatible formality, overlapping seasons). Most versatile first."""
+    from .colours import pair_score
+    mains = [i for i in items if i.category in ("top", "bottom", "dress", "outerwear")]
+    out = []
+    for a in mains:
+        n = 0
+        for b in mains:
+            if a is b or a.category == b.category:
+                continue
+            if a.category == "dress" and b.category in ("top", "bottom"):
+                continue
+            if b.category == "dress" and a.category in ("top", "bottom"):
+                continue
+            if not set(a.seasons) & set(b.seasons):
+                continue
+            if abs(a.formality - b.formality) > 1:
+                continue
+            if pair_score(a.colour, b.colour) >= threshold:
+                n += 1
+        out.append((a, n))
+    return sorted(out, key=lambda t: t[1], reverse=True)

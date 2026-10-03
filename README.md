@@ -25,13 +25,13 @@ macOS note: the Python from python.org (or `brew install python-tk`) includes Tk
 **Outfits**
 - *Suggest* — pick an occasion (casual, uni, work, date, party, formal, gym, travel), temperature and rain; it builds complete outfits (top + bottom or dress, shoes, outerwear when it's cold or wet, bag/accessory when they help) and ranks them. Each suggestion explains itself: colour harmony, formality fit, warmth, pattern clashes, and a nudge towards pieces you haven't worn lately.
 - *Build by hand* — choose pieces per category, see them together and get the same score.
-- *Saved* — your kept outfits. "Wear today" logs every piece as worn.
+- *Saved* — your kept outfits. "Wear today" logs every piece as worn; "Share image" exports the outfit as a flat-lay PNG.
 
 ![Outfits](assets/outfits.png)
 
 **Planner** — a week at a glance. Assign a saved outfit per day, or *Auto-fill* which generates a different outfit for each empty day (uni on weekdays, casual at the weekend). "Wore it" logs it for that date.
 
-**Stats** — items, saved outfits, wears in the last 30 days, wardrobe value, most-worn pieces, best cost-per-wear, never-worn and not-worn-in-90-days lists, colour and category breakdowns.
+**Stats** — items, saved outfits, wears in the last 30 days, wardrobe value, most-worn pieces, best cost-per-wear, never-worn and not-worn-in-90-days lists, a capsule check (which pieces combine with the most other pieces, and the loners), colour and category breakdowns.
 
 ![Stats](assets/stats.png)
 
@@ -60,6 +60,7 @@ wardrobe/
   images.py        placeholder illustrations
   seed.py          demo wardrobe
   csvio.py         CSV import/export
+  share.py         outfit → PNG collage
   logic/colours.py colour maths and harmony scoring
   logic/outfits.py suggestion engine
   logic/stats.py   wardrobe statistics
@@ -69,4 +70,4 @@ tests/             pytest — run `python -m pytest`
 
 ## Ideas for later
 
-Weather from an API for the planner · packing lists for trips · outfit photos · "capsule" analysis (which pieces combine with the most others) · share an outfit as an image.
+Weather from an API for the planner · packing lists for trips · outfit photos in the collage · laundry reminders.
