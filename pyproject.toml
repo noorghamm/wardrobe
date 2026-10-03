@@ -1,0 +1,22 @@
+[project]
+name = "wardrobe"
+version = "0.1.0"
+description = "Digital wardrobe and outfit planner — a desktop app built with customtkinter"
+requires-python = ">=3.10"
+dependencies = ["customtkinter>=5.2", "pillow>=10"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+wardrobe = "wardrobe.__main__:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["wardrobe*"]

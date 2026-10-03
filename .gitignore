@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+.venv/
+venv/
+# user data (your real wardrobe lives here, not in git)
+data/wardrobe.db
+data/images/user/
+.DS_Store
