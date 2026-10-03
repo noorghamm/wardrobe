@@ -11,7 +11,7 @@ from .stats_view import StatsView
 from .wardrobe_view import WardrobeView
 from .widgets import ACCENT, FONT, MUTED
 
-SIDEBAR = ("#efe9e1", "#1d1b19")
+SIDEBAR = ("#ece3dc", "#1a1618")
 
 
 class App(ctk.CTk):
@@ -22,14 +22,14 @@ class App(ctk.CTk):
         self.title("Wardrobe")
         self.geometry("1200x780")
         self.minsize(980, 640)
-        self.configure(fg_color=("#faf7f2", "#141414"))
+        self.configure(fg_color=("#f8f4ef", "#121012"))
         self.repo = Repository(db_path)
 
         self.sidebar = ctk.CTkFrame(self, width=190, corner_radius=0, fg_color=SIDEBAR)
         self.sidebar.pack(side="left", fill="y")
         self.sidebar.pack_propagate(False)
         ctk.CTkLabel(self.sidebar, text="Wardrobe", font=ctk.CTkFont(FONT, 22, "bold")).pack(pady=(26, 2), padx=20, anchor="w")
-        ctk.CTkLabel(self.sidebar, text="what to wear, sorted", text_color=MUTED, font=ctk.CTkFont(FONT, 12)).pack(padx=20, anchor="w", pady=(0, 20))
+        ctk.CTkLabel(self.sidebar, text="autumn, every day", text_color=MUTED, font=ctk.CTkFont(FONT, 12)).pack(padx=20, anchor="w", pady=(0, 20))
 
         self.content = ctk.CTkFrame(self, fg_color="transparent")
         self.content.pack(side="left", fill="both", expand=True)
@@ -40,7 +40,7 @@ class App(ctk.CTk):
                           ("Planner", PlannerView), ("Stats", StatsView)):
             b = ctk.CTkButton(self.sidebar, text=name, anchor="w", height=40, corner_radius=10,
                               fg_color="transparent", text_color=("#222222", "#eeeeee"),
-                              hover_color=("#e3dbd0", "#2a2725"), font=ctk.CTkFont(FONT, 14),
+                              hover_color=("#dfd2c9", "#2a2326"), font=ctk.CTkFont(FONT, 14),
                               command=lambda n=name: self.show(n))
             b.pack(fill="x", padx=12, pady=3)
             self.nav[name] = b
@@ -71,7 +71,7 @@ class App(ctk.CTk):
         else:
             self.views[name].refresh()
         self.views[name].pack(fill="both", expand=True)
-        self.nav[name].configure(fg_color=("#e3dbd0", "#2a2725"))
+        self.nav[name].configure(fg_color=("#dfd2c9", "#2a2326"))
         self.current = name
 
     def data_changed(self):

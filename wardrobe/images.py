@@ -120,11 +120,44 @@ def _sunglasses():
             (46, 54), (38, 66), (14, 64), (6, 50)]
 
 
+def _flares():
+    return [(28, 8), (72, 8), (74, 50), (88, 94), (56, 94), (50, 50), (44, 94), (12, 94), (26, 50)]
+
+
+def _maxi_skirt():
+    return [(36, 6), (64, 6), (90, 96), (10, 96)]
+
+
+def _corset():
+    return [(26, 14), (42, 18), (50, 12), (58, 18), (74, 14), (72, 40), (70, 60), (76, 90), (24, 90),
+            (30, 60), (28, 40)]
+
+
+def _platform():
+    return [(30, 6), (62, 6), (62, 56), (92, 62), (92, 86), (28, 86), (28, 56)]
+
+
+def _maryjane():
+    return [(6, 60), (14, 48), (34, 40), (56, 40), (78, 48), (94, 60), (94, 72), (6, 72)]
+
+
+def _shoulder_bag():
+    return [(16, 48), (84, 48), (80, 88), (20, 88)]
+
+
+def _choker():
+    return [(8, 46), (92, 46), (92, 56), (8, 56)]
+
+
 def _generic():
     return [(20, 20), (80, 20), (80, 80), (20, 80)]
 
 
 SHAPES = {
+    "baby tee": _tee, "mesh top": _tee, "corset top": _corset, "flared jeans": _flares,
+    "cargo trousers": _trousers, "maxi skirt": _maxi_skirt, "slip dress": _dress, "maxi dress": _dress,
+    "long coat": _coat, "leather jacket": _blazer, "platform boots": _platform, "mary janes": _maryjane,
+    "shoulder bag": _shoulder_bag, "choker": _choker, "tights": _trousers,
     "t-shirt": _tee, "tank": _tank, "shirt": _shirt, "blouse": _shirt, "turtleneck": _jumper,
     "jumper": _jumper, "hoodie": _jumper, "cardigan": _shirt,
     "jeans": _trousers, "trousers": _trousers, "leggings": _trousers, "joggers": _trousers,
@@ -170,6 +203,20 @@ def _pattern_layer(mask: Image.Image, pattern: str, base: tuple[int, int, int]) 
                 for dx, dy in ((0, -9), (9, 0), (0, 9), (-9, 0)):
                     d.ellipse([x + dx - 7, y + dy - 7, x + dx + 7, y + dy + 7], fill=light)
                 d.ellipse([x - 5, y - 5, x + 5, y + 5], fill=dark)
+    elif pattern == "lace":
+        for y in range(0, h, 18):
+            for x in range(0, w, 18):
+                d.ellipse([x + 2, y + 2, x + 14, y + 14], outline=light, width=2)
+    elif pattern == "velvet":
+        for y in range(0, h, 6):
+            d.line([(0, y), (w, y)], fill=light if (y // 6) % 3 == 0 else dark, width=1)
+    elif pattern == "leopard":
+        import random as _r
+        rr = _r.Random(3)
+        for _ in range(140):
+            x, y = rr.randint(0, w), rr.randint(0, h)
+            d.ellipse([x - 9, y - 7, x + 9, y + 7], outline=dark, width=4)
+            d.ellipse([x - 5, y - 3, x + 5, y + 3], fill=light)
     elif pattern == "graphic":
         d.rectangle([w * 0.33, h * 0.36, w * 0.67, h * 0.6], fill=light)
         d.rectangle([w * 0.38, h * 0.41, w * 0.62, h * 0.55], fill=dark)
@@ -202,20 +249,41 @@ def render(subtype: str, colour: str = "#808080", pattern: str = "solid", size: 
     d = ImageDraw.Draw(det)
     seam = _shade(colour, 0.78) + (255,)
     light = tuple(min(255, int(c * 1.3) + 25) for c in base) + (255,)
-    if subtype in ("t-shirt", "shirt", "blouse", "jumper", "hoodie", "turtleneck", "cardigan", "tank"):
+    if subtype in ("t-shirt", "baby tee", "mesh top", "shirt", "blouse", "jumper", "hoodie", "turtleneck",
+                   "cardigan", "tank"):
         d.arc([SIZE * 0.40, SIZE * 0.10, SIZE * 0.60, SIZE * 0.26], 0, 180, fill=seam, width=4)
-    if subtype in ("shirt", "blouse", "cardigan", "coat", "blazer", "jacket", "trench", "denim jacket"):
+    if subtype in ("shirt", "blouse", "cardigan", "coat", "long coat", "blazer", "jacket", "leather jacket",
+                   "trench", "denim jacket"):
         d.line([(SIZE * 0.5, SIZE * 0.26), (SIZE * 0.5, SIZE * 0.9)], fill=seam, width=3)
         for k in range(4):
             y = SIZE * (0.36 + 0.13 * k)
             d.ellipse([SIZE * 0.5 - 6, y - 6, SIZE * 0.5 + 6, y + 6], fill=seam)
-    if subtype in ("jeans", "trousers", "joggers", "leggings", "shorts"):
+    if subtype == "cargo trousers":
+        for cx in (0.3, 0.7):
+            d.rectangle([SIZE * (cx - 0.08), SIZE * 0.42, SIZE * (cx + 0.08), SIZE * 0.56], outline=seam, width=3)
+    if subtype == "corset top":
+        for k in range(5):
+            y = SIZE * (0.3 + 0.1 * k)
+            d.line([(SIZE * 0.44, y), (SIZE * 0.56, y + 12)], fill=light, width=2)
+            d.line([(SIZE * 0.56, y), (SIZE * 0.44, y + 12)], fill=light, width=2)
+    if subtype == "mary janes":
+        d.line([(SIZE * 0.3, SIZE * 0.42), (SIZE * 0.7, SIZE * 0.42)], fill=seam, width=5)
+    if subtype == "platform boots":
+        d.rectangle([0, SIZE * 0.72, SIZE, SIZE], fill=light)
+        d.line([(0, SIZE * 0.72), (SIZE, SIZE * 0.72)], fill=seam, width=3)
+        d.line([(0, SIZE * 0.82), (SIZE, SIZE * 0.82)], fill=seam, width=2)
+    if subtype == "mesh top":
+        for x in range(0, SIZE, 10):
+            d.line([(x, 0), (x, SIZE)], fill=light, width=1)
+        for y in range(0, SIZE, 10):
+            d.line([(0, y), (SIZE, y)], fill=light, width=1)
+    if subtype in ("jeans", "flared jeans", "cargo trousers", "trousers", "joggers", "leggings", "shorts", "tights"):
         d.line([(SIZE * 0.5, SIZE * 0.1), (SIZE * 0.5, SIZE * 0.44)], fill=seam, width=3)
         d.line([(0, SIZE * 0.175), (SIZE, SIZE * 0.175)], fill=seam, width=4)
-    if subtype == "jeans":
+    if subtype in ("jeans", "flared jeans"):
         d.line([(SIZE * 0.36, SIZE * 0.2), (SIZE * 0.33, SIZE * 0.9)], fill=light, width=2)
         d.line([(SIZE * 0.64, SIZE * 0.2), (SIZE * 0.67, SIZE * 0.9)], fill=light, width=2)
-    if subtype in ("tote", "crossbody", "clutch", "backpack"):
+    if subtype in ("tote", "crossbody", "clutch", "backpack", "shoulder bag"):
         d.line([(0, SIZE * 0.3), (SIZE, SIZE * 0.3)], fill=seam, width=3)
     if subtype in ("sneakers", "loafers", "flats", "sandals"):
         d.rectangle([0, SIZE * 0.69, SIZE, SIZE], fill=light)          # sole
@@ -232,7 +300,7 @@ def render(subtype: str, colour: str = "#808080", pattern: str = "solid", size: 
     det.putalpha(Image.composite(det.getchannel("A"), Image.new("L", (SIZE, SIZE), 0), mask))
     img.alpha_composite(det)
     # bag handles sit outside the body
-    if subtype in ("tote", "crossbody", "clutch", "backpack"):
+    if subtype in ("tote", "crossbody", "clutch", "backpack", "shoulder bag"):
         ImageDraw.Draw(img).arc([SIZE * 0.3, SIZE * 0.06, SIZE * 0.7, SIZE * 0.42], 180, 360,
                                 fill=_shade(colour, 0.78) + (255,), width=7)
 

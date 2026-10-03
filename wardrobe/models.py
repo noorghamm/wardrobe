@@ -6,19 +6,21 @@ from datetime import date
 
 CATEGORIES = ["top", "bottom", "dress", "outerwear", "shoes", "bag", "accessory"]
 SEASONS = ["spring", "summer", "autumn", "winter"]
-PATTERNS = ["solid", "stripes", "dots", "check", "floral", "graphic"]
+PATTERNS = ["solid", "stripes", "dots", "check", "floral", "graphic", "lace", "velvet", "leopard"]
 OCCASIONS = ["casual", "uni", "work", "date", "party", "formal", "gym", "travel"]
 STATUSES = ["clean", "laundry"]
 
 # formality: 1 = loungewear … 5 = black tie.  warmth: 1 = sheer/summer … 5 = heavy winter.
 SUBTYPES = {
-    "top": ["t-shirt", "shirt", "blouse", "jumper", "hoodie", "cardigan", "tank", "turtleneck"],
-    "bottom": ["jeans", "trousers", "skirt", "shorts", "leggings", "joggers"],
-    "dress": ["dress", "jumpsuit", "abaya"],
-    "outerwear": ["coat", "jacket", "blazer", "trench", "puffer", "denim jacket"],
-    "shoes": ["sneakers", "boots", "heels", "loafers", "sandals", "flats"],
-    "bag": ["tote", "crossbody", "backpack", "clutch"],
-    "accessory": ["scarf", "hat", "belt", "jewellery", "sunglasses", "hijab"],
+    "top": ["t-shirt", "baby tee", "shirt", "blouse", "corset top", "mesh top", "jumper", "hoodie",
+            "cardigan", "tank", "turtleneck"],
+    "bottom": ["jeans", "flared jeans", "cargo trousers", "trousers", "skirt", "maxi skirt", "shorts",
+               "leggings", "joggers"],
+    "dress": ["dress", "slip dress", "maxi dress", "jumpsuit", "abaya"],
+    "outerwear": ["coat", "long coat", "jacket", "leather jacket", "blazer", "trench", "puffer", "denim jacket"],
+    "shoes": ["sneakers", "boots", "platform boots", "mary janes", "heels", "loafers", "sandals", "flats"],
+    "bag": ["tote", "crossbody", "shoulder bag", "backpack", "clutch"],
+    "accessory": ["scarf", "hat", "belt", "choker", "jewellery", "sunglasses", "hijab", "tights"],
 }
 
 

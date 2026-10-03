@@ -13,7 +13,7 @@ git clone https://github.com/noorghamm/wardrobe.git
 cd wardrobe
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python -m wardrobe --demo        # --demo loads a 48-piece sample wardrobe the first time
+python -m wardrobe --demo        # --demo loads a 63-piece sample wardrobe the first time
 ```
 
 macOS note: the Python from python.org (or `brew install python-tk`) includes Tkinter; the Xcode command-line-tools Python does not.
@@ -36,6 +36,10 @@ macOS note: the Python from python.org (or `brew install python-tk`) includes Tk
 ![Stats](assets/stats.png)
 
 Dark mode is a switch in the sidebar.
+
+## The demo wardrobe
+
+Autumn-girl, a bit witchy, a bit 2000s: baby tees and corset tops, lace and velvet, flares and cargos, pleated minis and tiered maxis, slip dresses, a long black wool coat, platform boots and Mary Janes, chokers, chunky belts and shoulder bags — in black, plum, oxblood, burgundy, forest, moss, chocolate, rust, ochre and cream. Items carry tags like `witchy`, `2000s`, `dark academia`, `autumn` so you can filter by mood.
 
 ## About the pictures
 

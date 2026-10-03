@@ -182,6 +182,6 @@ def test_versatility_and_share(tmp_path):
     v = stats.versatility(repo.items())
     assert v and v[0][1] >= v[-1][1]
     names = [it.name for it, _ in v[:5]]
-    assert any("jeans" in n.lower() or "tee" in n.lower() for n in names)   # basics should rank high
+    assert any(w in n.lower() for n in names for w in ("flares", "tee", "cargo", "turtleneck", "knit"))   # basics rank high
     p = save_outfit_image(repo.items()[:4], "Test outfit", tmp_path / "o.png", "casual")
     assert p.exists() and p.stat().st_size > 1000

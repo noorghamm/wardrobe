@@ -12,10 +12,12 @@ PALETTE = {
     "burgundy": "#6e1f2b", "red": "#c62828", "coral": "#ef6f5b", "rust": "#b7472a",
     "mustard": "#d8a21b", "butter": "#f3e39a", "lilac": "#c8b6e2", "plum": "#5c2a5e",
     "blush": "#f0b7b5", "hot pink": "#e0457b", "chocolate": "#4a2c20", "silver": "#c0c0c0",
+    "oxblood": "#4e1a22", "moss": "#4f5d2f", "aubergine": "#3b1f3f", "ink": "#1b1f2e", "terracotta": "#9c4a2f",
+    "dusty rose": "#b98a8a", "ochre": "#b57b1a",
 }
 
 NEUTRALS = {"black", "white", "cream", "grey", "charcoal", "beige", "camel", "brown",
-            "navy", "denim", "chocolate", "silver"}
+            "navy", "denim", "chocolate", "silver", "ink", "oxblood"}
 
 
 def hex_to_rgb(h: str) -> tuple[float, float, float]:

@@ -63,8 +63,8 @@ def _eligible(items: list[Item], occasion: str, season: str, status_ok=("clean",
         sporty = "gym" in it.tags or "sport" in it.tags
         if occasion == "gym" and not sporty:
             continue
-        if occasion != "gym" and sporty and it.category != "shoes":
-            continue      # gym kit stays in the gym bag (trainers are fine)
+        if occasion != "gym" and sporty and not (it.category == "shoes" and occasion in ("casual", "travel")):
+            continue      # gym kit stays in the gym bag (trainers are fine for casual days)
         if occasion not in ("casual", "travel") and "lounge" in it.tags:
             continue
         out.append(it)

@@ -12,10 +12,10 @@ from ..logic.colours import PALETTE
 from ..models import Item
 
 # ---- theme tokens ----
-ACCENT = "#8a5a44"          # warm cocoa
-ACCENT_HOVER = "#6f4736"
+ACCENT = "#5e2a3f"          # plum / oxblood
+ACCENT_HOVER = "#46202f"
 CARD = ("#ffffff", "#262626")
-CARD_HOVER = ("#f6f1ea", "#2f2f2f")
+CARD_HOVER = ("#f3ebe6", "#2f2a2c")
 MUTED = ("#6b6b6b", "#a0a0a0")
 FONT = "Helvetica"
 
